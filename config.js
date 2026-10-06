@@ -44,11 +44,11 @@ window.IF_CONFIG = {
   WORKSHOP_TITLE: "Transformation & Projects Workshop",
 
   /* 6) The journeys. Keep the ids as they are; edit the labels freely. */
-  JOURNEYS: [
-    { id: "disruption", label: "Disruption: communication, hotels & compensation" },
-    { id: "assisted",   label: "Assisted travel: wheelchair & medical" },
-    { id: "premium",    label: "Premium handling: VIP & CIP" },
-    { id: "other",      label: "Other service-delivery moment (explain in the idea)" }
+     JOURNEYS: [
+    { id: "disruption", label: "Disruption: communication, hotels through aggregators, transfers, misconnections, reaccommodation, route transfers, compensation" },
+    { id: "other",      label: "Baggage & other touchpoints: communication of fares and customer promise on the website, ancillary purchase, check-in, boarding, meal selection, etc." },
+    { id: "assisted",   label: "Assisted travel & accessibility: wheelchair, medical travel, UMNR, senior citizens, hidden disabilities, first time flyers" },
+    { id: "premium",    label: "Premium handling: VIP, CIP, facilitation or identification" }
   ],
 
   /* 7) Demo mode only: the admin password to use while trying the
