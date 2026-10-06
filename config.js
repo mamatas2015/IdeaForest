@@ -22,7 +22,7 @@ window.IF_CONFIG = {
     "Saloni Garg", "Gaurav Kapoor", "Abhishek Kumar", "Anupam Mallik",
     "Nikhil Puri", "Deepak Yadav", "Devendra Sharma", "Salvador Manuel Fialho",
     "Manish Sundriyal", "Latika Jaggi", "Bhavna Tiwari", "Ayushi Gupta",
-    "Ruhi Kulshrestha", "Rishav Sircar", "Amit Nangia", "Niti Arora",
+    "Ruhi Kulshrestha", "Rishav Sircar", "Amit Nangia", "Niti Arora", "Lalit Adhikari", "Rakesh Kumar", "Akshitta Sarin",
     "Mamata Shukla"
   ],
 
