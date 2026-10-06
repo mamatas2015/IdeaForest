@@ -11,9 +11,9 @@
   var ROOM_EMAIL = (CFG.ROOM_EMAIL || 'room@ideaforest.example').toLowerCase();
 
   var FIX = {
-    governance: { label: 'Governance', hint: 'data, dashboards, reports, design standards' },
-    process: { label: 'Process', hint: 'a policy, SOP or way of working (like a compensation policy)' },
-    automation: { label: 'Automation', hint: 'a system does it instantly (like eVouchers as a payment mode)' }
+    governance: { label: 'Governance', hint: 'Data, dashboards, reports and design standards. Example: Disruption dashboard.' },
+    process: { label: 'Process', hint: 'A policy, SOP or new way of working. Example: changes to excess baggage waiver policy which is more easily governed.' },
+    automation: { label: 'Automation', hint: 'A system does it instantly. Example: eVouchers as alternative payment mode or a single centralised compensation eligibility check.' }
   };
   var EFFORT = { S: 'Small (weeks)', M: 'Medium (a quarter or two)', L: 'Large (6+ months)' };
 
@@ -308,7 +308,7 @@
     var open = !!state.settings.votingOpen;
     el.className = 'status-bar ' + (open ? 'open' : 'closed');
     el.innerHTML = '<div>' + (open
-      ? '🗳️ <b>Voting is open.</b> One vote per idea. A 🍂 needs a reason. You cannot vote on your own idea.'
+      ? '🗳️ <b>Voting is open.</b> One vote per idea. A downvote 🍂 needs a reason. You cannot vote on your own idea.'
       : '🔒 <b>Voting is closed.</b> Plant ideas now; your facilitator will open voting.') + '</div>' + adminBarHTML();
   }
   function renderAdminBarPre() {
@@ -318,7 +318,7 @@
   function renderTop() {
     var el = $('#top-banner'); if (!el) return;
     var picks = topPicks();
-    var h = '<h2>🏆 Top 2 doable ideas</h2><p class="s">Ranked by net votes, counting only ideas marked doable (no major capital spend, first version within about 6 months).</p><div class="top-list">';
+    var h = '<h2>🏆 Top 2 feasible ideas</h2><p class="s">Ranked by net votes, counting only ideas marked feasible (no major capital spend, first version within about 6 months).</p><div class="top-list">';
     if (!picks.length) h += '<div class="top-badge"><div class="rank">Waiting for votes</div><div class="nm">—</div></div>';
     picks.forEach(function (i, n) {
       var t = tally(i);
@@ -330,8 +330,8 @@
   function renderFilters() {
     var el = $('#filters'); if (!el) return;
     var chips = PAGE === 'live'
-      ? [['all', 'All ideas'], ['doable', '✅ Doable only'], ['growing', '🌱 Growing'], ['tree', '🌳 Full trees'], ['newest', '✨ Newest']]
-      : [['all', 'All ideas'], ['doable', '✅ Doable only'], ['newest', '✨ Newest']];
+      ? [['all', 'All ideas'], ['doable', '✅ Feasible only'], ['growing', '🌱 Growing'], ['tree', '🌳 Full trees'], ['newest', '✨ Newest']]
+      : [['all', 'All ideas'], ['doable', '✅ Feasible only'], ['newest', '✨ Newest']];
     var h = '<span class="sub" style="margin:0">Show:</span>';
     chips.forEach(function (c) { h += '<button class="filter-btn ' + (state.view === c[0] ? 'active' : '') + '" data-act="set-view" data-view="' + c[0] + '">' + c[1] + '</button>'; });
     h += '<select id="journey-filter" aria-label="Filter by journey"><option value="all">All journeys</option>';
@@ -365,7 +365,7 @@
     }
     h += '<div class="tags"><span class="tag">' + esc(journeyLabel(idea.journey)) + '</span>' +
       (FIX[idea.fixType] ? '<span class="tag fix">' + FIX[idea.fixType].label + '</span>' : '') +
-      '<span class="tag ' + (idea.doable ? 'ok' : 'big') + '">' + (idea.doable ? '✅ Doable' : '⚠️ Big') + (idea.effort ? ' · ' + esc(idea.effort) : '') + '</span></div>';
+      '<span class="tag ' + (idea.doable ? 'ok' : 'big') + '">' + (idea.doable ? '✅ Feasible' : '⚠️ Big') + (idea.effort ? ' · ' + esc(idea.effort) : '') + '</span></div>';
     h += '<div class="idea-title">' + esc(idea.title) + '</div><div class="idea-desc">' + esc(idea.idea) + '</div>';
     var ev = '';
     if (idea.moment) ev += '<div><b>The moment:</b> ' + esc(idea.moment) + '</div>';
@@ -442,16 +442,16 @@
     var opt = pre ? '' : ' <span class="hint" style="display:inline">(if you have it)</span>';
     return '<div class="form" data-stage="' + stage + '">' +
       '<label for="f-journey">Which journey does this belong to?</label><select id="f-journey">' + journeyOptions() + '</select>' +
-      '<label for="f-title">Name your idea in one line</label><input type="text" id="f-title" maxlength="120" placeholder="e.g. Send hotel and cab details on WhatsApp automatically">' +
+      '<label for="f-title">Name your idea in one line</label><input type="text" id="f-title" maxlength="120" placeholder="e.g. create a VIP equivalent unique customer profile of all those who request assisted travel, for targeted handling and marketing.">' +
       '<hr class="divider">' +
-      '<label for="f-moment">1. The moment</label><span class="hint">Where in the journey does the customer get let down, and what do they experience? What frustrates you that operations should be fixing, but is not?</span>' +
+      '<label for="f-moment">1. The moment</label><span class="hint">Where in the journey does the customer get let down, and what do they experience? Or what frustrates you that operations should be fixing, but is not? Or what would you like to initiate even if it doesn’t frustrate you.</span>' +
       '<textarea id="f-moment" rows="3" maxlength="600"></textarea>' +
-      '<label for="f-proof">2. The proof' + opt + '</label><span class="hint">One real example: a complaint, something you lived through as a customer or at the airport, a news or social media post.</span>' +
+      '<label for="f-proof">2. The proof' + opt + '</label><span class="hint">One real example: a complaint, something you lived through as a customer or at the airport, a news or social media post. What led you to believe this is a problem worth solving.</span>' +
       '<textarea id="f-proof" rows="2" maxlength="600"></textarea>' +
-      '<label for="f-outside">3. The outside look' + opt + '</label><span class="hint">What do other airlines or industries do about this? One search or one chat with Claude is enough. Paste a link or what you found.</span>' +
+      '<label for="f-outside">3. The outside look' + opt + '</label><span class="hint">What do other airlines or industries do about this? Have others solved this? Is there a best practice you wish to replicate? One search, website reading or one chat with a good AI platform is enough. Paste a link or explain what you found. Spend 30 mins to ensure idea is solid!</span>' +
       '<textarea id="f-outside" rows="2" maxlength="600"></textarea>' +
       '<hr class="divider">' +
-      '<label for="f-idea">Your idea: what is the fix?</label><span class="hint">Two or three sentences. What would we change, and what would the customer notice?</span>' +
+      '<label for="f-idea">Your idea: what is the fix?</label><span class="hint">Two or three sentences. What would we change, and what would the customer notice? You need not have the complete solution, just a direction.</span>' +
       '<textarea id="f-idea" rows="3" maxlength="600"></textarea>' +
       '<label>4. Which kind of fix is it?</label>' + radioFix() +
       '<label>Is it doable?</label>' +
@@ -459,7 +459,7 @@
       '<div class="radio-row compact"><label><input type="radio" name="f-capex" value="yes"> Yes</label><label><input type="radio" name="f-capex" value="no"> No</label></div>' +
       '<span class="hint">Could a first version go live within about 6 months?</span>' +
       '<div class="radio-row compact"><label><input type="radio" name="f-six" value="yes"> Yes</label><label><input type="radio" name="f-six" value="no"> No</label></div>' +
-      '<div class="nudge" id="f-nudge">💡 This sounds big. Could a smaller first step solve the same frustration? You can still plant it as is, but ideas marked big will not count toward the final top 2.</div>' +
+      '<div class="nudge" id="f-nudge">💡 We don’t need to stop thinking big! But think if a smaller first step solves the same frustration? You can still plant it as is though.</div>' +
       '<label for="f-effort">Rough size of the first version</label><select id="f-effort"><option value="">Choose…</option>' +
       Object.keys(EFFORT).map(function (k) { return '<option value="' + k + '">' + EFFORT[k] + '</option>'; }).join('') + '</select>' +
       '</div>';
@@ -482,7 +482,7 @@
     else if (stage === 'pre' && !f.outside) missing = 'Add the outside look (box 3): what do others do?';
     else if (!f.idea) missing = 'Describe your idea (what is the fix?).';
     else if (!f.fixType) missing = 'Choose the kind of fix (governance, process or automation).';
-    else if (!f.capex || !f.six) missing = 'Answer both doability questions.';
+    else if (!f.capex || !f.six) missing = 'Answer both feasibility questions.';
     else if (!f.effort) missing = 'Choose the rough size.';
     return { stage: stage, f: f, missing: missing };
   }
@@ -637,7 +637,7 @@
     var main;
     if (PAGE === 'pre') {
       main = '<main class="container">' +
-        '<div class="hero"><h2>Plant an idea before we meet</h2><p>You know where customers get let down, whether from years at the airport or from your own frustrating trips. Bring one idea you have actually looked into. About 20 minutes is plenty.</p>' +
+        '<div class="hero"><h2>Plant an idea before we meet</h2><p>You know where customers get let down, whether from years at the airport or from your own frustrating trips. Plant one idea backed by a real example and back it with some background work and research. E.g. a quick look at what others do or what is the customer promise that we are not delivering on. 30 mins should be enough!</p>' +
         '<ul><li>Think of a time you thought: <i>“Operations should be fixing this. Why is it not fixed?”</i></li><li>Back it with one real example and one look at what others do.</li><li>Keep it doable: a smaller first step beats a giant project.</li></ul></div>' +
         '<div id="banners"></div><div id="admin-bar" style="margin-bottom:16px"></div>' +
         '<section class="card" id="form-card"><h2>🌱 Your Evidence Seed</h2><p class="sub">Planting as <b id="plant-as">…</b>. All fields marked 1 to 4 are needed.</p>' + formHTML('pre') +
