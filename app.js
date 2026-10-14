@@ -373,7 +373,9 @@
     if (idea.outside) ev += '<div><b>The outside look:</b> ' + linkify(idea.outside) + '</div>';
     if (ev) h += '<div class="evidence">' + ev + '</div>';
     if (PAGE === 'live' && t.reasons.length) h += t.reasons.map(function (r) { return '<div class="downvote-reason">“' + esc(r) + '”</div>'; }).join('');
-    h += '<div class="idea-footer"><div class="idea-author"><div class="avatar">' + esc((idea.author || '?').charAt(0).toUpperCase()) + '</div>' + esc(idea.author || 'Anonymous') + '</div>';
+    var who = state.isAdmin ? (idea.author || 'Anonymous') : (own ? 'You' : 'A colleague');
+    var initial = state.isAdmin ? (idea.author || '?').charAt(0).toUpperCase() : (own ? 'Y' : '🌱');
+    h += '<div class="idea-footer"><div class="idea-author"><div class="avatar">' + esc(initial) + '</div>' + esc(who) + '</div>';
     if (PAGE === 'live') {
       h += '<div class="vote-actions">' +
         '<button class="vote-btn vote-up ' + (mine === 'up' ? 'mine' : '') + '" data-act="up" ' + (canVote ? '' : 'data-blocked="1"') + ' title="Vote up">🍃 ' + t.ups + '</button>' +
